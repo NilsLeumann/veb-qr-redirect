@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>VEB QR Redirect</title>
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLZZ39549J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-TLZZ39549J');
+  </script>
+
+  <!-- Basic styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background: #00529b;
+      color: white;
+      padding: 1rem;
+    }
+    main {
+      padding: 2rem;
+    }
+    a {
+      color: #00529b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: inline-block;
+      margin-top: 2rem;
+    }
+  </style>
+
+  <script>
+    window.onload = function () {
+      const keys = [
+        "1719048090", // ID
+        "852424448",  // Vorname
+        "847354706",  // Nachname
+        "1600321209", // Adresse
+        "1880637321", // PLZ
+        "1754662852", // Ort
+        "2141516075", // Land
+        "1315816922"  // E-Mail
+      ];
+
+      const raw = decodeURIComponent(window.location.search.substring(1));
+      document.title = "VEB QR Redirect – " + raw;
+
+      if (!raw) {
+        document.getElementById("status").innerText = "Keine Daten angegeben.";
+        return;
+      }
+
+      const values = raw.split(/[;,]/);
+      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
+
+      keys.forEach((key, i) => {
+        if (values[i]) {
+          url += `&entry.${key}=${encodeURIComponent(values[i])}`;
+        }
+      });
+
+      const link = document.getElementById("fallback-link");
+      link.href = url;
+      link.innerText = "Hier klicken, falls keine Weiterleitung erfolgt";
+
+      // Delay slightly so analytics can log the title before redirect
+      setTimeout(() => {
+        window.location.href = url;
+      }, 300);
+    };
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>VEB QR Weiterleitung</h1>
+  </header>
+
+  <main>
+    <div class="box">
+      <p id="status">Du wirst gleich weitergeleitet…</p>
+      <p><a id="fallback-link" href="#">Hier klicken, falls keine Weiterleitung erfolgt</a></p>
+    </div>
+  </main>
+</body>
+
+</html>
