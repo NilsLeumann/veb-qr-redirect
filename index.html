@@ -66,16 +66,20 @@
       ];
 
       const raw = decodeURIComponent(window.location.search.substring(1));
-      document.title = "VEB QR Redirect – " + raw;
+      document.title = "VEB QR Redirect – " + (raw || "Keine Daten");
+
+      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
 
       if (!raw) {
+        // No data given: show message, no auto redirect
         document.getElementById("status").innerText = "Keine Daten angegeben.";
+        document.getElementById("fallback-link").href = url;
+        document.getElementById("fallback-link").innerText = "Hier klicken, um das Formular ohne Daten zu öffnen";
         return;
       }
 
+      // Data given → parse & redirect
       const values = raw.split(/[;,]/);
-      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
-
       keys.forEach((key, i) => {
         if (values[i]) {
           url += `&entry.${key}=${encodeURIComponent(values[i])}`;
@@ -86,7 +90,7 @@
       link.href = url;
       link.innerText = "Hier klicken, falls keine Weiterleitung erfolgt";
 
-      // Delay slightly so analytics can log the title before redirect
+      // Delay 30 ms
       setTimeout(() => {
         window.location.href = url;
       }, 30);
