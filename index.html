@@ -26,27 +26,32 @@
       padding: 0;
       text-align: center;
     }
+
     header {
-      background: #00529b;
+      background: #024056;
       color: white;
       padding: 1rem;
     }
+
     main {
       padding: 2rem;
     }
+
     a {
-      color: #00529b;
+      color: #024056;
       text-decoration: none;
       font-weight: bold;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
     .box {
       background: white;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       display: inline-block;
       margin-top: 2rem;
     }
@@ -68,7 +73,7 @@
       const raw = decodeURIComponent(window.location.search.substring(1));
       document.title = "VEB QR Redirect – " + (raw || "Keine Daten");
 
-      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
+      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url&entry.46889473=ANFRAGETYP";
 
       if (!raw) {
         // No data given: show message, no auto redirect
@@ -78,8 +83,8 @@
         return;
       }
 
-      // Data given → parse & redirect
-      const values = raw.split(/[;,]/);
+      // Data given → parse & redirect (only ; as separator)
+      const values = raw.split(";");
       keys.forEach((key, i) => {
         if (values[i]) {
           url += `&entry.${key}=${encodeURIComponent(values[i])}`;
