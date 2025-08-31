@@ -71,7 +71,7 @@
         "46889473"    // Anfragetyp (NEU!)
       ];
 
-      const raw = decodeURIComponent(window.location.search.substring(1));
+      const raw = decodeURIComponent(window.location.search.substring(1).replace(/\+/g, ' '));
       document.title = "VEB QR Redirect – " + (raw || "Keine Daten");
 
       let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
