@@ -67,23 +67,23 @@
         "1880637321", // PLZ
         "1754662852", // Ort
         "2141516075", // Land
-        "1315816922"  // E-Mail
+        "1315816922", // E-Mail
+        "46889473"    // Anfragetyp (NEU!)
       ];
 
       const raw = decodeURIComponent(window.location.search.substring(1));
       document.title = "VEB QR Redirect – " + (raw || "Keine Daten");
 
-      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url&entry.46889473=ANFRAGETYP";
+      let url = "https://docs.google.com/forms/d/e/1FAIpQLSefRRXl7x0gLirnxQw2cJBSb9CXtUKPzEex-9y8X1wDSLXKxA/viewform?usp=pp_url";
 
       if (!raw) {
-        // No data given: show message, no auto redirect
         document.getElementById("status").innerText = "Keine Daten angegeben.";
         document.getElementById("fallback-link").href = url;
         document.getElementById("fallback-link").innerText = "Hier klicken, um das Formular ohne Daten zu öffnen";
         return;
       }
 
-      // Data given → parse & redirect (only ; as separator)
+      // Daten parsen
       const values = raw.split(";");
       keys.forEach((key, i) => {
         if (values[i]) {
@@ -95,7 +95,7 @@
       link.href = url;
       link.innerText = "Hier klicken, falls keine Weiterleitung erfolgt";
 
-      // Delay 30 ms
+      // Automatische Weiterleitung
       setTimeout(() => {
         window.location.href = url;
       }, 30);
